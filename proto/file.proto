@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package file.api;
+
+service FileExecutor {
+    rpc Execute(FilePath) returns (RetVal) {}
+    rpc GetFiles(FilePath) returns (FileList) {}
+}
+
+message FilePath {
+    string filePath = 1;
+}
+
+message RetVal {
+    bool success = 1;
+    string message = 2;
+}
+
+message FileInfo {
+    enum FileType {
+        Dir = 0;
+        RegularFile = 1;
+    }
+
+    string name = 1;
+    FileType type = 2;
+}
+
+message FileList {
+    bool success = 1;
+    string message = 2;
+    repeated FileInfo fileInfo = 3;
+}
