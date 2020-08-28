@@ -1,11 +1,13 @@
 #pragma once
 
-#include <Windows.h>
+#include <windows.h>
 
 #include <exception>
 #include <string>
 
 #include "string_algorithms.h"
+
+namespace dragon_commander {
 
 inline std::string GetLastErrorString() {
   const DWORD err = GetLastError();
@@ -24,3 +26,5 @@ inline std::string GetLastErrorString() {
 #define THROW_WIN32_HANDLE_ERROR(expr) \
   if ((expr) == INVALID_HANDLE_VALUE)  \
     throw std::runtime_error(GetLastErrorString());
+
+} // namespace dragon_commander
