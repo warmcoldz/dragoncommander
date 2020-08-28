@@ -2,6 +2,9 @@ find_path(BOOST_ALGORITHM_INCLUDE_DIRS "boost/algorithm/algorithm.hpp")
 
 add_executable(main
 	main.cpp
+	exception.h
+	string_algorithms.h
+	file/file.h
 	file/file.cpp
 	file.grpc.pb.cc
 	file.pb.cc)
