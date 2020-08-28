@@ -18,7 +18,6 @@ std::wstring NormalizePath(const std::wstring& path) {
 
 std::wstring GetDirectoryMask(const std::wstring& path) {
   return NormalizePath(path) + L"\\*";
-  ;
 }
 
 FileInfo ConvertToFileInfo(const WIN32_FIND_DATA& findData) {
