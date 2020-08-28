@@ -1,9 +1,9 @@
-#include <Windows.h>
 #include <google/protobuf/service.h>
 #include <grpcpp/ext/proto_server_reflection_plugin.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/health_check_service_interface.h>
 #include <shlwapi.h>
+#include <windows.h>
 
 #include <boost/algorithm/string/predicate.hpp>
 #include <iostream>
@@ -16,6 +16,10 @@
 #include "file/file.h"
 #include "string_algorithms.h"
 
+using namespace std::string_literals;
+
+namespace dragon_commander {
+namespace {
 file::api::FileInfo::FileType ConvertToGrpc(FileType fileType) {
   switch (fileType) {
     case FileType::Dir:
@@ -26,6 +30,9 @@ file::api::FileInfo::FileType ConvertToGrpc(FileType fileType) {
 
   return {};
 }
+
+} // namespace
+
 
 class FileExecutorImpl : public file::api::FileExecutor::Service {
  public:
@@ -67,18 +74,21 @@ class FileExecutorImpl : public file::api::FileExecutor::Service {
   }
 };
 
+} // namespace dragon_commander
+
+
 int main(int argc, char** argv) {
-  const std::string server_address("0.0.0.0:50051");
+  const auto server_address = "0.0.0.0:50051"s;
 
   grpc::ServerBuilder builder;
   builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
 
-  FileExecutorImpl service;
+  dragon_commander::FileExecutorImpl service;
   builder.RegisterService(&service);
 
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
   std::cout << "Server listening on " << server_address << std::endl;
-  server->Wait();
 
+  server->Wait();
   return 0;
 }

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(Test)
+project(DragonCommander)
 
 add_definitions(-D_WIN32_WINNT=0x600)
 add_definitions(-DUNICODE)

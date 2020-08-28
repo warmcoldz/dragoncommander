@@ -8,6 +8,7 @@
 
 #include "../exception.h"
 
+namespace dragon_commander {
 namespace {
 
 std::wstring NormalizePath(const std::wstring& path) {
@@ -30,6 +31,7 @@ FileInfo ConvertToFileInfo(const WIN32_FIND_DATA& findData) {
 }
 
 }  // namespace
+
 
 void LaunchFile(const std::wstring& path) {
   SHELLEXECUTEINFOW executeInfo{};
@@ -57,3 +59,5 @@ std::vector<FileInfo> GetFilesFromDirectory(const std::wstring& path) {
 
   return fileInfos;
 }
+
+} // namespace dragon_commander
