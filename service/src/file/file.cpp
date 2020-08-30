@@ -3,6 +3,7 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 
+#include <iostream>
 #include <memory>
 #include <string>
 
@@ -65,3 +66,4 @@ void RemoveFile(const std::wstring& path) {
 }
 
 }  // namespace dragon_commander
+
