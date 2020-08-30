@@ -32,7 +32,6 @@ FileInfo ConvertToFileInfo(const WIN32_FIND_DATA& findData) {
 
 }  // namespace
 
-
 void LaunchFile(const std::wstring& path) {
   SHELLEXECUTEINFOW executeInfo{};
   executeInfo.cbSize = sizeof(SHELLEXECUTEINFO);
@@ -60,10 +59,9 @@ std::vector<FileInfo> GetFilesFromDirectory(const std::wstring& path) {
   return fileInfos;
 }
 
-
 void RemoveFile(const std::wstring& path) {
-  LPCWSTR lpFileName = path.c_str();
-  BOOL res = DeleteFileW(lpFileName);
+  BOOL res = ::DeleteFileW(path.c_str());
+  THROW_WIN32_ERROR(res)
 }
 
-} // namespace dragon_commander
+}  // namespace dragon_commander
