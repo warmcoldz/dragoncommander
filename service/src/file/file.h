@@ -16,5 +16,6 @@ struct FileInfo {
 
 void LaunchFile(const std::wstring& path);
 std::vector<FileInfo> GetFilesFromDirectory(const std::wstring& path);
+void RemoveFile(const std::wstring& path);
 
 } // namespace dragon_commander

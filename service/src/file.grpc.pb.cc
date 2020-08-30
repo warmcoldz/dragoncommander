@@ -25,6 +25,7 @@ namespace api {
 static const char* FileExecutor_method_names[] = {
   "/file.api.FileExecutor/Execute",
   "/file.api.FileExecutor/GetFiles",
+  "/file.api.FileExecutor/Delete",
 };
 
 std::unique_ptr< FileExecutor::Stub> FileExecutor::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -36,6 +37,7 @@ std::unique_ptr< FileExecutor::Stub> FileExecutor::NewStub(const std::shared_ptr
 FileExecutor::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel)
   : channel_(channel), rpcmethod_Execute_(FileExecutor_method_names[0], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetFiles_(FileExecutor_method_names[1], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_Delete_(FileExecutor_method_names[2], ::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status FileExecutor::Stub::Execute(::grpc::ClientContext* context, const ::file::api::FilePath& request, ::file::api::RetVal* response) {
@@ -94,6 +96,34 @@ void FileExecutor::Stub::experimental_async::GetFiles(::grpc::ClientContext* con
   return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::file::api::FileList>::Create(channel_.get(), cq, rpcmethod_GetFiles_, context, request, false);
 }
 
+::grpc::Status FileExecutor::Stub::Delete(::grpc::ClientContext* context, const ::file::api::FilePath& request, ::file::api::RetVal* response) {
+  return ::grpc::internal::BlockingUnaryCall(channel_.get(), rpcmethod_Delete_, context, request, response);
+}
+
+void FileExecutor::Stub::experimental_async::Delete(::grpc::ClientContext* context, const ::file::api::FilePath* request, ::file::api::RetVal* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_Delete_, context, request, response, std::move(f));
+}
+
+void FileExecutor::Stub::experimental_async::Delete(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::file::api::RetVal* response, std::function<void(::grpc::Status)> f) {
+  ::grpc_impl::internal::CallbackUnaryCall(stub_->channel_.get(), stub_->rpcmethod_Delete_, context, request, response, std::move(f));
+}
+
+void FileExecutor::Stub::experimental_async::Delete(::grpc::ClientContext* context, const ::file::api::FilePath* request, ::file::api::RetVal* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_Delete_, context, request, response, reactor);
+}
+
+void FileExecutor::Stub::experimental_async::Delete(::grpc::ClientContext* context, const ::grpc::ByteBuffer* request, ::file::api::RetVal* response, ::grpc::experimental::ClientUnaryReactor* reactor) {
+  ::grpc_impl::internal::ClientCallbackUnaryFactory::Create(stub_->channel_.get(), stub_->rpcmethod_Delete_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::file::api::RetVal>* FileExecutor::Stub::AsyncDeleteRaw(::grpc::ClientContext* context, const ::file::api::FilePath& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::file::api::RetVal>::Create(channel_.get(), cq, rpcmethod_Delete_, context, request, true);
+}
+
+::grpc::ClientAsyncResponseReader< ::file::api::RetVal>* FileExecutor::Stub::PrepareAsyncDeleteRaw(::grpc::ClientContext* context, const ::file::api::FilePath& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc_impl::internal::ClientAsyncResponseReaderFactory< ::file::api::RetVal>::Create(channel_.get(), cq, rpcmethod_Delete_, context, request, false);
+}
+
 FileExecutor::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       FileExecutor_method_names[0],
@@ -115,6 +145,16 @@ FileExecutor::Service::Service() {
              ::file::api::FileList* resp) {
                return service->GetFiles(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      FileExecutor_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< FileExecutor::Service, ::file::api::FilePath, ::file::api::RetVal>(
+          [](FileExecutor::Service* service,
+             ::grpc_impl::ServerContext* ctx,
+             const ::file::api::FilePath* req,
+             ::file::api::RetVal* resp) {
+               return service->Delete(ctx, req, resp);
+             }, this)));
 }
 
 FileExecutor::Service::~Service() {
@@ -128,6 +168,13 @@ FileExecutor::Service::~Service() {
 }
 
 ::grpc::Status FileExecutor::Service::GetFiles(::grpc::ServerContext* context, const ::file::api::FilePath* request, ::file::api::FileList* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status FileExecutor::Service::Delete(::grpc::ServerContext* context, const ::file::api::FilePath* request, ::file::api::RetVal* response) {
   (void) context;
   (void) request;
   (void) response;
