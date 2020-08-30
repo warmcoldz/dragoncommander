@@ -44,10 +44,21 @@ function Execute(filePath) {
     });
 }
 
+function Delete(filePath) {
+    fileExecutor.delete({filePath}, function(err, response) {
+        console.log(response);
+    });
+    Travel(CurrentFolder);
+}
+
 $('#navigate-submit').click(function(evt) {
 	Travel($('#path').val().trim());
 });
 
 $('#path-submit').click(function(evt) {
 	Execute($('#path').val().trim());
+});
+
+$('#delete-submit').click(function(evt) {
+	Delete($('#path').val().trim());
 });

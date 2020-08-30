@@ -3,6 +3,7 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 
+#include <iostream>
 #include <memory>
 #include <string>
 
@@ -56,4 +57,9 @@ std::vector<FileInfo> GetFilesFromDirectory(const std::wstring& path) {
   }
 
   return fileInfos;
+}
+
+void RemoveFile(const std::wstring& path) {
+  LPCWSTR lpFileName = path.c_str();
+  BOOL res = DeleteFileW(lpFileName);
 }

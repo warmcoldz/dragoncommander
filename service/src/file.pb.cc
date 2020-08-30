@@ -148,10 +148,11 @@ const char descriptor_table_protodef_file_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "eType\"$\n\010FileType\022\007\n\003Dir\020\000\022\017\n\013RegularFil"
   "e\020\001\"R\n\010FileList\022\017\n\007success\030\001 \001(\010\022\017\n\007mess"
   "age\030\002 \001(\t\022$\n\010fileInfo\030\003 \003(\0132\022.file.api.F"
-  "ileInfo2w\n\014FileExecutor\0221\n\007Execute\022\022.fil"
-  "e.api.FilePath\032\020.file.api.RetVal\"\000\0224\n\010Ge"
-  "tFiles\022\022.file.api.FilePath\032\022.file.api.Fi"
-  "leList\"\000b\006proto3"
+  "ileInfo2\251\001\n\014FileExecutor\0221\n\007Execute\022\022.fi"
+  "le.api.FilePath\032\020.file.api.RetVal\"\000\0224\n\010G"
+  "etFiles\022\022.file.api.FilePath\032\022.file.api.F"
+  "ileList\"\000\0220\n\006Delete\022\022.file.api.FilePath\032"
+  "\020.file.api.RetVal\"\000b\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_file_2eproto_deps[1] = {
 };
@@ -163,7 +164,7 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_fil
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_file_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_file_2eproto = {
-  false, false, descriptor_table_protodef_file_2eproto, "file.proto", 416,
+  false, false, descriptor_table_protodef_file_2eproto, "file.proto", 467,
   &descriptor_table_file_2eproto_once, descriptor_table_file_2eproto_sccs, descriptor_table_file_2eproto_deps, 4, 0,
   schemas, file_default_instances, TableStruct_file_2eproto::offsets,
   file_level_metadata_file_2eproto, 4, file_level_enum_descriptors_file_2eproto, file_level_service_descriptors_file_2eproto,
