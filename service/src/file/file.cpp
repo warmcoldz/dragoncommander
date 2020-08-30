@@ -3,7 +3,6 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 
-#include <iostream>
 #include <memory>
 #include <string>
 
