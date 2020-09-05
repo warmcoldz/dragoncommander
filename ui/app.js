@@ -2,6 +2,7 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const $ = require('jquery');
 const path = require('path');
+const fs = require('fs');
 
 const PROTO_PATH = '../proto/file.proto';
 const packageDefinition = protoLoader.loadSync(
@@ -16,7 +17,35 @@ const packageDefinition = protoLoader.loadSync(
 const file_api = grpc.loadPackageDefinition(packageDefinition).file.api;
 const fileExecutor = new file_api.FileExecutor('localhost:50051', grpc.credentials.createInsecure());
 
-let CurrentFolder = '';
+const configFile = 'config.json';
+
+let CurrentFolder;
+let configValues;
+
+function ReadConfig() {
+    try {
+        configValues = JSON.parse(fs.readFileSync(configFile));
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function Bootstrap() {
+    if (!ReadConfig()) {
+        configValues = {
+            lastDirectory: process.cwd()
+        }
+    }
+
+    CurrentFolder = configValues.lastDirectory;
+    Travel(CurrentFolder);
+}
+
+function SaveLastDirectory() {
+    configValues.lastDirectory = CurrentFolder;
+    fs.writeFileSync(configFile, JSON.stringify(configValues, null, 2));
+}
 
 function Travel(currentFolder) {
     CurrentFolder = currentFolder;
@@ -36,6 +65,9 @@ function Travel(currentFolder) {
                 .appendTo('#file-list')
         }
     });
+
+    $('#path').val(CurrentFolder);
+    SaveLastDirectory();
 }
 
 function Execute(filePath) {
@@ -47,8 +79,8 @@ function Execute(filePath) {
 function Delete(filePath) {
     fileExecutor.delete({filePath}, function(err, response) {
         console.log(response);
+        Travel(CurrentFolder);
     });
-    Travel(CurrentFolder);
 }
 
 $('#navigate-submit').click(function(evt) {
@@ -62,3 +94,5 @@ $('#path-submit').click(function(evt) {
 $('#delete-submit').click(function(evt) {
 	Delete($('#path').val().trim());
 });
+
+Bootstrap();
