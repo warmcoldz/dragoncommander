@@ -31,8 +31,7 @@ file::api::FileInfo::FileType ConvertToGrpc(FileType fileType) {
   return {};
 }
 
-} // namespace
-
+}  // namespace
 
 class FileExecutorImpl : public file::api::FileExecutor::Service {
  public:
@@ -73,9 +72,9 @@ class FileExecutorImpl : public file::api::FileExecutor::Service {
     return grpc::Status::OK;
   }
 
-  ::grpc::Status Delete(::grpc::ServerContext* context,
-                        const ::file::api::FilePath* request,
-                        ::file::api::RetVal* response) override {
+  grpc::Status Delete(::grpc::ServerContext* context,
+                      const ::file::api::FilePath* request,
+                      ::file::api::RetVal* response) override {
     try {
       const auto filePath = FromUtf8ToUtf16(request->filepath());
       RemoveFile(filePath);
@@ -88,10 +87,25 @@ class FileExecutorImpl : public file::api::FileExecutor::Service {
 
     return grpc::Status::OK;
   }
+
+  grpc::Status CreateDir(::grpc::ServerContext* context,
+                         const ::file::api::FilePath* request,
+                         ::file::api::RetVal* response) override {
+    try {
+      const auto filePath = FromUtf8ToUtf16(request->filepath());
+      MakeDir(filePath);
+      response->set_success(true);
+    } catch (const std::exception& e) {
+      std::cout << e.what() << std::endl;
+      response->set_success(false);
+      response->set_message(e.what());
+    }
+
+    return grpc::Status::OK;
+  }
 };
 
-} // namespace dragon_commander
-
+}  // namespace dragon_commander
 
 int main(int argc, char** argv) {
   const auto server_address = "0.0.0.0:50051"s;

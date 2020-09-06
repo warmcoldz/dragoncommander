@@ -3,7 +3,6 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 
-#include <iostream>
 #include <memory>
 #include <string>
 
@@ -65,5 +64,9 @@ void RemoveFile(const std::wstring& path) {
   THROW_WIN32_ERROR(res)
 }
 
-}  // namespace dragon_commander
+void MakeDir(const std::wstring& path) {
+  BOOL res = ::CreateDirectoryW(path.c_str(), NULL);
+  THROW_WIN32_ERROR(res)
+}
 
+}  // namespace dragon_commander

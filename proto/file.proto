@@ -6,6 +6,7 @@ service FileExecutor {
     rpc Execute(FilePath) returns (RetVal) {}
     rpc GetFiles(FilePath) returns (FileList) {}
     rpc Delete(FilePath) returns (RetVal) {}
+    rpc CreateDir(FilePath) returns (RetVal) {}
 }
 
 message FilePath {
