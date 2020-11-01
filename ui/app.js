@@ -83,6 +83,13 @@ function Delete(filePath) {
     });
 }
 
+function CreateDir(filePath) {
+    fileExecutor.CreateDir({filePath}, function(err, response) {
+        console.log(response);
+        Travel(CurrentFolder);
+    });
+}
+
 $('#navigate-submit').click(function(evt) {
 	Travel($('#path').val().trim());
 });
@@ -93,6 +100,10 @@ $('#path-submit').click(function(evt) {
 
 $('#delete-submit').click(function(evt) {
 	Delete($('#path').val().trim());
+});
+
+$('#createDir-submit').click(function(evt) {
+	CreateDir($('#path').val().trim());
 });
 
 Bootstrap();
